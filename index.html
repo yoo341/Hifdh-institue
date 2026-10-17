@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hifdh Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4ee;--card:#fff;--ink:#17261f;--mute:#5d6b63;--pri:#0f5c45;--pri2:#e3f1ea;--gold:#b8892b;--line:#e2ded1;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1713;--card:#17221c;--ink:#ecf2ee;--mute:#9fb0a6;--pri:#4fbf93;--pri2:#1c3329;--gold:#e0b04f;--line:#2a3a31;--on:#0b1410;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1713;--card:#17221c;--ink:#ecf2ee;--mute:#9fb0a6;--pri:#4fbf93;--pri2:#1c3329;--gold:#e0b04f;--line:#2a3a31;--on:#0b1410;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+.ar{font-family:Amiri,serif;direction:rtl}
+header{background:var(--pri);color:var(--on);padding:14px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--gold);color:#12231b;display:grid;place-items:center;font:700 24px Amiri,serif}
+.brand b{font-size:18px;display:block;line-height:1.1}.brand span{font-size:12px;opacity:.85}
+.seg{display:flex;background:rgba(0,0,0,.2);border-radius:99px;padding:3px}
+.seg button{border:0;background:none;color:inherit;padding:6px 14px;border-radius:99px;font:600 13px Inter,sans-serif;cursor:pointer}
+.seg button.on{background:var(--gold);color:#12231b}
+nav{display:flex;gap:4px;overflow-x:auto;padding:8px 12px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+nav button{border:0;background:none;color:var(--mute);padding:8px 12px;border-radius:8px;font:600 14px Inter,sans-serif;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--pri2);color:var(--pri)}
+main{max-width:980px;margin:0 auto;padding:16px}
+h2{margin:6px 0 4px;font-size:22px}h3{margin:0 0 4px;font-size:16px}
+.sub{color:var(--mute);margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;background:var(--pri2);color:var(--pri);margin:0 4px 6px 0}
+.tag.g{background:rgba(184,137,43,.18);color:var(--gold)}
+.btn{border:0;background:var(--pri);color:var(--on);padding:8px 14px;border-radius:9px;font:600 13px Inter,sans-serif;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.o{background:none;border:1px solid var(--line);color:var(--ink)}
+.btn.s{padding:5px 10px;font-size:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bar{height:8px;background:var(--pri2);border-radius:9px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--pri)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.stat b{font-size:24px;display:block;color:var(--pri)}
+input,select,textarea{width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font:14px Inter,sans-serif;margin:4px 0 10px}
+label{font-size:12px;font-weight:600;color:var(--mute)}
+.hero{background:linear-gradient(135deg,var(--pri),#0a3d2e);color:#fff;border-radius:16px;padding:22px;margin-bottom:14px}
+.hero .ar{font-size:34px;color:#f1d58b;margin:0}
+.player{background:#0c1612;color:#cfe;border-radius:12px;aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:14px;margin:8px 0}
+.player video{width:100%;height:100%;border-radius:12px}
+.sur{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer}
+.sur.d{border-color:var(--pri);background:var(--pri2)}
+.sur .ar{font-size:22px}
+.note{font-size:12px;color:var(--mute)}
+footer{text-align:center;color:var(--mute);font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">ح</div><div><b>Hifdh Institute</b><span>Online Arabic &amp; Qur’an School</span></div></div>
+  <div class="row"><div class="seg" id="seg"></div><span id="who" style="font-size:13px"></span></div>
+</header>
+<nav id="nav"></nav>
+<main id="app"></main>
+<footer>© Hifdh Institute · Learn Arabic and memorise the Qur’an, anywhere</footer>
+
+<script>
+const KEY="hifdh_v1";
+const inDays=(d,h)=>{const t=new Date();t.setDate(t.getDate()+d);t.setHours(h,0,0,0);const p=n=>String(n).padStart(2,"0");return `${t.getFullYear()}-${p(t.getMonth()+1)}-${p(t.getDate())}T${p(t.getHours())}:00`};
+const seed=()=>({user:null,tab:"home",track:"child",enrolled:[],done:[],hifdh:[],watch:null,
+courses:[
+{id:"c1",track:"child",title:"Arabic Alphabet & Sounds",level:"Beginner",age:"Ages 5–8",desc:"Letters, vowels and first words through songs, stories and games."},
+{id:"c2",track:"child",title:"Noorani Qaidah",level:"Beginner",age:"Ages 6–10",desc:"Correct reading of the Qur’an letter by letter with makharij practice."},
+{id:"c3",track:"child",title:"Juz Amma Hifdh Club",level:"Hifdh",age:"Ages 7–12",desc:"Guided memorisation of short surahs with daily revision circles."},
+{id:"a1",track:"adult",title:"Arabic Foundations 1",level:"Beginner",age:"Adults",desc:"Read, write and speak everyday Arabic. No prior knowledge needed."},
+{id:"a2",track:"adult",title:"Tajweed Essentials",level:"Intermediate",age:"Adults",desc:"Rules of recitation with live correction from a qualified teacher."},
+{id:"a3",track:"adult",title:"Qur’an Hifdh Programme",level:"Hifdh",age:"Adults",desc:"Structured memorisation plan: new lesson, recent revision and old revision."},
+{id:"a4",track:"adult",title:"Arabic Grammar (Nahw & Sarf)",level:"Advanced",age:"Adults",desc:"Sentence structure and word patterns for reading classical texts."}],
+recs:[
+{id:"r1",course:"c1",title:"Lesson 1: Alif to Thaa",dur:"12 min",url:""},
+{id:"r2",course:"c1",title:"Lesson 2: Jeem to Khaa",dur:"14 min",url:""},
+{id:"r3",course:"c2",title:"Lesson 1: Single letters",dur:"18 min",url:""},
+{id:"r4",course:"c3",title:"Surah Al-Ikhlas, line by line",dur:"10 min",url:""},
+{id:"r5",course:"a1",title:"Lesson 1: Greetings & introductions",dur:"25 min",url:""},
+{id:"r6",course:"a1",title:"Lesson 2: The Arabic alphabet",dur:"30 min",url:""},
+{id:"r7",course:"a2",title:"Makharij al-huroof",dur:"35 min",url:""},
+{id:"r8",course:"a3",title:"How to plan your hifdh week",dur:"20 min",url:""}],
+lives:[
+{id:"l1",track:"child",title:"Qaidah Live Class",teacher:"Ustadha Maryam",when:inDays(1,16),link:""},
+{id:"l2",track:"child",title:"Hifdh Revision Circle",teacher:"Ustadh Ibrahim",when:inDays(3,17),link:""},
+{id:"l3",track:"adult",title:"Tajweed Live Clinic",teacher:"Ustadh Yusuf",when:inDays(2,20),link:""},
+{id:"l4",track:"adult",title:"Arabic Conversation Hour",teacher:"Ustadha Aisha",when:inDays(4,19),link:""}],
+tasks:[
+{id:"t1",course:"c1",title:"Write the letters Alif to Thaa twice",due:"Friday"},
+{id:"t2",course:"a1",title:"Introduce yourself in 5 Arabic sentences",due:"Sunday"}]});
+let S;try{S=JSON.parse(localStorage.getItem(KEY))||seed()}catch(e){S=seed()}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const uid=p=>p+Math.random().toString(36).slice(2,7);
+const SUR=[["Ad-Duha","الضحى"],["Ash-Sharh","الشرح"],["At-Tin","التين"],["Al-Alaq","العلق"],["Al-Qadr","القدر"],["Al-Bayyinah","البينة"],["Az-Zalzalah","الزلزلة"],["Al-Adiyat","العاديات"],["Al-Qari’ah","القارعة"],["At-Takathur","التكاثر"],["Al-Asr","العصر"],["Al-Humazah","الهمزة"],["Al-Fil","الفيل"],["Quraysh","قريش"],["Al-Ma’un","الماعون"],["Al-Kawthar","الكوثر"],["Al-Kafirun","الكافرون"],["An-Nasr","النصر"],["Al-Masad","المسد"],["Al-Ikhlas","الإخلاص"],["Al-Falaq","الفلق"],["An-Nas","الناس"]];
+const TABS=[["home","Home"],["courses","Courses"],["rec","Recorded"],["live","Live Classes"],["hifdh","Hifdh Tracker"],["work","Assignments"],["teach","Teacher Panel"]];
+const css=s=>document.querySelector(s);
+const go=t=>{S.tab=t;S.watch=null;save();draw()};
+const setTrack=t=>{S.track=t;save();draw()};
+const fmt=w=>new Date(w).toLocaleString([], {weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+const until=w=>{const m=Math.round((new Date(w)-new Date())/6e4);if(m<-90)return"Ended";if(m<=0)return"Live now";if(m<60)return`Starts in ${m} min`;if(m<1440)return`Starts in ${Math.round(m/60)} h`;return`In ${Math.round(m/1440)} day(s)`};
+const cname=id=>(S.courses.find(c=>c.id==id)||{}).title||"Course";
+const ctrack=id=>(S.courses.find(c=>c.id==id)||{}).track;
+const pct=cid=>{const r=S.recs.filter(x=>x.course==cid);return r.length?Math.round(100*r.filter(x=>S.done.includes(x.id)).length/r.length):0};
+
+function join(){const n=css("#nm").value.trim();if(!n)return;S.user={name:n};S.track=css("#tr").value;save();draw()}
+function enrol(id){if(!S.user){alert("Please create your student profile on the Home page first.");go("home");return}if(!S.enrolled.includes(id))S.enrolled.push(id);save();draw()}
+function watch(id){S.watch=id;save();draw()}
+function finish(id){if(!S.done.includes(id))S.done.push(id);save();draw()}
+function tog(i){const k=S.hifdh.indexOf(i);k<0?S.hifdh.push(i):S.hifdh.splice(k,1);save();draw()}
+function del(list,id){S[list]=S[list].filter(x=>x.id!=id);save();draw()}
+function addCourse(){const t=css("#ct").value.trim();if(!t)return;S.courses.push({id:uid("c"),track:css("#ctr").value,title:t,level:css("#cl").value,age:css("#ctr").value=="child"?"Children":"Adults",desc:css("#cd").value});save();draw()}
+function addRec(){const t=css("#rt").value.trim();if(!t)return;S.recs.push({id:uid("r"),course:css("#rc").value,title:t,dur:css("#rd").value||"—",url:css("#ru").value.trim()});save();draw()}
+function addLive(){const t=css("#lt").value.trim(),w=css("#lw").value;if(!t||!w)return;S.lives.push({id:uid("l"),track:css("#ltr").value,title:t,teacher:css("#lte").value||"Ustadh",when:w,link:css("#ll").value.trim()});save();draw()}
+function addTask(){const t=css("#tt").value.trim();if(!t)return;S.tasks.push({id:uid("t"),course:css("#tc").value,title:t,due:css("#td").value||"This week"});save();draw()}
+
+const courseCard=c=>{const on=S.enrolled.includes(c.id);return`<div class="card"><span class="tag">${esc(c.level)}</span><span class="tag g">${esc(c.age)}</span><h3>${esc(c.title)}</h3><p class="sub" style="margin:0 0 8px">${esc(c.desc)}</p>${on?`<div class="bar"><i style="width:${pct(c.id)}%"></i></div><div class="row"><span class="note">${pct(c.id)}% complete</span><button class="btn s o" onclick="go('rec')">Open lessons</button></div>`:`<button class="btn s" onclick="enrol('${c.id}')">Enrol free</button>`}</div>`};
+const liveCard=l=>{const u=until(l.when);return`<div class="card"><span class="tag ${u=="Live now"?"g":""}">${u}</span><span class="tag">${l.track=="child"?"Children":"Adults"}</span><h3>${esc(l.title)}</h3><p class="sub" style="margin:0 0 8px">${esc(l.teacher)} · ${fmt(l.when)}</p>${l.link?`<a class="btn s" href="${esc(l.link)}" target="_blank" rel="noopener">Join class</a>`:`<span class="note">Join link will be added by the teacher</span>`}</div>`};
+
+const V={
+home(){const mine=S.courses.filter(c=>S.enrolled.includes(c.id));const done=S.done.length,nxt=S.lives.filter(l=>l.track==S.track&&until(l.when)!="Ended").sort((a,b)=>a.when>b.when?1:-1).slice(0,2);
+return`<div class="hero"><p class="ar">بسم الله الرحمن الرحيم</p><h2 style="color:#fff">Welcome to Hifdh Institute</h2><p style="margin:0;opacity:.9">Arabic language, Tajweed and Qur’an memorisation for children and adults, with recorded lessons you can replay and live classes with real teachers.</p></div>
+${S.user?`<div class="stats"><div class="card stat"><b>${mine.length}</b>Courses enrolled</div><div class="card stat"><b>${done}</b>Lessons finished</div><div class="card stat"><b>${S.hifdh.length}/${SUR.length}</b>Surahs memorised</div><div class="card stat"><b>${nxt.length}</b>Upcoming live classes</div></div>
+<h3>Hello, ${esc(S.user.name)}</h3><p class="sub">Your ${S.track=="child"?"children’s":"adult"} dashboard</p>
+<h3>My courses</h3><div class="grid">${mine.length?mine.map(courseCard).join(""):`<div class="card"><p class="sub">You haven’t enrolled yet.</p><button class="btn s" onclick="go('courses')">Browse courses</button></div>`}</div>
+<h3 style="margin-top:16px">Next live classes</h3><div class="grid">${nxt.map(liveCard).join("")||`<p class="sub">No upcoming classes.</p>`}</div>`
+:`<div class="card" style="max-width:420px"><h3>Create your student profile</h3><label>Student name</label><input id="nm" placeholder="Full name"><label>I am registering as</label><select id="tr"><option value="adult">Adult learner</option><option value="child">Child (parent registers)</option></select><button class="btn" onclick="join()">Enter portal</button></div>
+<h3 style="margin-top:16px">How it works</h3><div class="grid"><div class="card"><h3>1. Enrol</h3><p class="sub" style="margin:0">Choose a course for your age and level.</p></div><div class="card"><h3>2. Learn</h3><p class="sub" style="margin:0">Watch recorded lessons anytime and attend live classes.</p></div><div class="card"><h3>3. Practise</h3><p class="sub" style="margin:0">Finish assignments and track your hifdh progress.</p></div></div>`}`},
+courses(){const l=S.courses.filter(c=>c.track==S.track);return`<h2>${S.track=="child"?"Children’s":"Adult"} courses</h2><p class="sub">Use the switch at the top to change between children and adults.</p><div class="grid">${l.map(courseCard).join("")}</div>`},
+rec(){const w=S.recs.find(r=>r.id==S.watch);let p="";if(w){const mp4=/\.(mp4|webm)(\?|$)/i.test(w.url);p=`<div class="card" style="margin-bottom:14px"><h3>${esc(w.title)}</h3><div class="player">${w.url?(mp4?`<video controls src="${esc(w.url)}"></video>`:`<div><p>This lesson is hosted externally.</p><a class="btn" href="${esc(w.url)}" target="_blank" rel="noopener">Open video</a></div>`):`<div><p style="font-size:30px;margin:0">▶</p><p>Video will appear here once the teacher uploads the link.</p></div>`}</div><div class="row"><button class="btn s" onclick="finish('${w.id}')">${S.done.includes(w.id)?"Completed ✓":"Mark as complete"}</button><button class="btn s o" onclick="watch(null)">Close</button></div></div>`}
+const cs=S.courses.filter(c=>c.track==S.track);return`<h2>Recorded lessons</h2><p class="sub">Pre-recorded classes you can watch at any time and replay as often as you like.</p>${p}${cs.map(c=>{const r=S.recs.filter(x=>x.course==c.id);return`<div class="card" style="margin-bottom:10px"><h3>${esc(c.title)}</h3><div class="bar"><i style="width:${pct(c.id)}%"></i></div>${r.map(x=>`<div class="row" style="justify-content:space-between;padding:6px 0;border-top:1px solid var(--line)"><span>${S.done.includes(x.id)?"✓ ":""}${esc(x.title)} <span class="note">· ${esc(x.dur)}</span></span><button class="btn s" onclick="watch('${x.id}')">Watch</button></div>`).join("")||`<p class="note">No recordings yet.</p>`}</div>`}).join("")}`},
+live(){const l=S.lives.filter(x=>x.track==S.track).sort((a,b)=>a.when>b.when?1:-1);return`<h2>Live classes</h2><p class="sub">Join your teacher in real time. Links open Zoom, Google Meet or any meeting room the teacher adds.</p><div class="grid">${l.map(liveCard).join("")||"<p class='sub'>No live classes scheduled.</p>"}</div>`},
+hifdh(){const n=S.hifdh.length;return`<h2>Hifdh tracker</h2><p class="sub">Tap a surah when you have memorised it. Juz Amma (selection): ${n} of ${SUR.length}.</p><div class="bar"><i style="width:${100*n/SUR.length}%"></i></div><div class="grid" style="margin-top:12px">${SUR.map((s,i)=>`<div class="card sur ${S.hifdh.includes(i)?"d":""}" onclick="tog(${i})"><span>${S.hifdh.includes(i)?"✓ ":""}${s[0]}</span><span class="ar">${s[1]}</span></div>`).join("")}</div>`},
+work(){const t=S.tasks.filter(x=>ctrack(x.course)==S.track);return`<h2>Assignments</h2><p class="sub">Homework set by your teachers.</p><div class="grid">${t.map(x=>`<div class="card"><span class="tag">${esc(cname(x.course))}</span><h3>${esc(x.title)}</h3><p class="note" style="margin:0">Due: ${esc(x.due)}</p></div>`).join("")||"<p class='sub'>Nothing due.</p>"}</div>`},
+teach(){const opt=S.courses.map(c=>`<option value="${c.id}">${esc(c.title)}</option>`).join("");const tr=`<select id="@"><option value="child">Children</option><option value="adult">Adults</option></select>`;
+return`<h2>Teacher panel</h2><p class="sub">Add courses, recordings, live classes and homework. This demo saves to this device only; a real launch needs a login and server.</p><div class="grid">
+<div class="card"><h3>New course</h3><input id="ct" placeholder="Course title">${tr.replace("@","ctr")}<select id="cl"><option>Beginner</option><option>Intermediate</option><option>Advanced</option><option>Hifdh</option></select><textarea id="cd" rows="2" placeholder="Short description"></textarea><button class="btn s" onclick="addCourse()">Add course</button></div>
+<div class="card"><h3>New recorded lesson</h3><input id="rt" placeholder="Lesson title"><select id="rc">${opt}</select><input id="rd" placeholder="Duration, e.g. 15 min"><input id="ru" placeholder="Video link (YouTube, Drive or .mp4)"><button class="btn s" onclick="addRec()">Add lesson</button></div>
+<div class="card"><h3>New live class</h3><input id="lt" placeholder="Class title"><input id="lte" placeholder="Teacher name">${tr.replace("@","ltr")}<input id="lw" type="datetime-local"><input id="ll" placeholder="Zoom or Meet link"><button class="btn s" onclick="addLive()">Schedule</button></div>
+<div class="card"><h3>New assignment</h3><input id="tt" placeholder="Task"><select id="tc">${opt}</select><input id="td" placeholder="Due, e.g. Friday"><button class="btn s" onclick="addTask()">Post</button></div></div>
+<h3 style="margin-top:16px">Manage</h3><div class="card">${S.lives.map(l=>`<div class="row" style="justify-content:space-between"><span>Live: ${esc(l.title)}</span><button class="btn s o" onclick="del('lives','${l.id}')">Remove</button></div>`).join("")}${S.recs.map(r=>`<div class="row" style="justify-content:space-between"><span>Video: ${esc(r.title)}</span><button class="btn s o" onclick="del('recs','${r.id}')">Remove</button></div>`).join("")}</div>`}};
+
+function draw(){
+css("#seg").innerHTML=`<button class="${S.track=="child"?"on":""}" onclick="setTrack('child')">Children</button><button class="${S.track=="adult"?"on":""}" onclick="setTrack('adult')">Adults</button>`;
+css("#who").textContent=S.user?S.user.name:"";
+css("#nav").innerHTML=TABS.map(t=>`<button class="${S.tab==t[0]?"on":""}" onclick="go('${t[0]}')">${t[1]}</button>`).join("");
+css("#app").innerHTML=V[S.tab]();
+}
+draw();
+</script>
+</body>
+</html>
